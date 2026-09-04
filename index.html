@@ -85,14 +85,15 @@
 
         <!-- START SCREEN -->
         <div id="startScreen" class="absolute inset-0 z-40 bg-gradient-to-b from-sky-100 via-indigo-50 to-purple-100 flex flex-col items-center justify-between p-6 pb-2 transition-opacity duration-500">
-            <div class="w-full text-center mt-10">
+            <div class="w-full text-center mt-8">
                 <h1 class="text-4xl font-bold text-slate-800 tracking-tight font-subtitle movie-caption">계이름 마스터</h1>
             </div>
 
             <div class="w-full my-auto space-y-3.5">
                 <div class="bg-white/80 backdrop-blur-sm p-3.5 rounded-3xl shadow-sm border-2 border-indigo-100">
-                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-2 text-left font-sans-subtitle">플레이어 닉네임</label>
-                    <input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요 ⭐" autocomplete="off" maxlength="10" class="w-full px-4 py-2.5 rounded-2xl bg-indigo-50/50 border-2 border-indigo-100 focus:border-indigo-400 focus:bg-white focus:outline-none text-center font-bold text-slate-700 placeholder-indigo-300 transition-all font-subtitle text-lg">
+                    <label class="block text-xs font-bold text-slate-400 mb-1 ml-2 text-left font-sans-subtitle">플레이어 닉네임 (2~10자)</label>
+                    <input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요 ⭐" autocomplete="off" minlength="2" maxlength="10" class="w-full px-4 py-2.5 rounded-2xl bg-indigo-50/50 border-2 border-indigo-100 focus:border-indigo-400 focus:bg-white focus:outline-none text-center font-bold text-slate-700 placeholder-indigo-300 transition-all font-subtitle text-lg">
+                    <p id="nicknameErrorMsg" class="hidden text-rose-500 text-[11px] font-bold mt-1 text-center font-sans-subtitle">닉네임은 2자 이상 10자 이하로 입력해주세요!</p>
                 </div>
 
                 <!-- Tutorial Button Section -->
@@ -112,7 +113,7 @@
                     <p>• <strong>3단계:</strong> 높은 + 낮은음자리표 (10문제)</p>
                 </div>
 
-                <button onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-3xl text-white font-bold text-2xl font-subtitle shadow-lg">
+                <button id="startGameBtn" onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-3xl text-white font-bold text-2xl font-subtitle shadow-lg">
                     본 게임 시작 🚀
                 </button>
             </div>
@@ -313,12 +314,14 @@
                 <h2 class="text-3xl font-bold font-subtitle mb-1 movie-caption" id="gameOverHeading">전 단계 완주 성공!</h2>
                 <p class="text-indigo-100 text-sm font-bold mb-3 font-sans-subtitle"><span id="finalNickname" class="text-yellow-300 font-extrabold font-subtitle"></span>님의 최종 총점</p>
                 <div class="text-5xl font-extrabold font-subtitle text-yellow-300 drop-shadow-md" id="finalScoreDisplay">0</div>
+                <!-- Status & Error Alert Text -->
+                <div id="saveStatusMsg" class="mt-2 text-xs font-bold text-yellow-100 font-sans-subtitle">점수를 동기화하는 중...</div>
             </div>
             
             <div class="flex-1 overflow-y-auto p-4">
                 <h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center justify-center space-x-1 font-subtitle">
                     <span>🏆</span>
-                    <span>명예의 전당 Top 50</span>
+                    <span>명예의 전당 Top 10</span>
                     <span>🏆</span>
                 </h3>
                 <ul id="leaderboardList" class="space-y-2 pb-4">
@@ -327,7 +330,7 @@
             </div>
             
             <div class="p-4 pt-3 bg-white border-t border-slate-100 flex flex-col items-center">
-                <button onclick="showStartScreen()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-2xl text-white font-bold text-xl font-subtitle shadow-md mb-2">처음부터 다시 도전하기 🔄</button>
+                <button id="restartBtn" onclick="showStartScreen()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-2xl text-white font-bold text-xl font-subtitle shadow-md mb-2">처음부터 다시 도전하기 🔄</button>
                 <div class="text-[11px] text-slate-400 font-sans-subtitle">
                     ©️2026. 걍샤T. All rights reserved.
                 </div>
@@ -336,73 +339,160 @@
 
     </main>
 
+    <!-- FIREBASE MODULE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWvh3k7fEHSLfUXtCtbsy6ED91-Z9YI4c",
+            authDomain: "music-game-f880a.firebaseapp.com",
+            projectId: "music-game-f880a",
+            storageBucket: "music-game-f880a.firebasestorage.app",
+            messagingSenderId: "118056086495",
+            appId: "1:118056086495:web:f7e65aa5ac5bba6dceb26a"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        
+        // Environment App ID fallback (Strict Paths: /artifacts/{appId}/public/data/scores)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let user = null;
+        let currentUser = null;
 
+        // Anonymous Auth Execution
         const initAuth = async () => {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                await signInAnonymously(auth);
             } catch (error) {
-                console.error("Auth init failed", error);
+                console.error("Firebase Anonymous Auth Failed:", error);
             }
         };
         initAuth();
 
         onAuthStateChanged(auth, (u) => { 
-            user = u; 
+            currentUser = u; 
         });
 
+        // Save Score Function (Saves only if new high score or first score)
         window.saveScoreToFirebase = async (nickname, score) => {
-            if(!user) return;
+            const statusMsg = document.getElementById('saveStatusMsg');
+            const restartBtn = document.getElementById('restartBtn');
+
+            if (!currentUser) {
+                if (statusMsg) {
+                    statusMsg.innerText = "로그인 상태를 확인하지 못했습니다. 연결을 재시도하세요.";
+                    statusMsg.className = "mt-2 text-xs font-bold text-rose-200 font-sans-subtitle";
+                }
+                return;
+            }
+
+            if (restartBtn) restartBtn.disabled = true;
+            if (statusMsg) {
+                statusMsg.innerText = "점수를 저장하는 중입니다...";
+                statusMsg.className = "mt-2 text-xs font-bold text-yellow-100 font-sans-subtitle";
+            }
+
             try {
-                const dbRef = collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
-                await addDoc(dbRef, {
-                    nickname: nickname,
-                    score: score,
-                    timestamp: Date.now()
-                });
-            } catch(e) {
-                console.error("Save error", e);
+                // RULE 1: Strict collection path (/artifacts/{appId}/public/data/scores)
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'scores', currentUser.uid);
+                const docSnap = await getDoc(userDocRef);
+
+                let isUpdated = false;
+                if (docSnap.exists()) {
+                    const existingData = docSnap.data();
+                    if (score > existingData.score) {
+                        // Update if new score is strictly higher
+                        await setDoc(userDocRef, {
+                            nickname: nickname,
+                            score: score,
+                            timestamp: Date.now()
+                        });
+                        isUpdated = true;
+                    }
+                } else {
+                    // First time save for this user
+                    await setDoc(userDocRef, {
+                        nickname: nickname,
+                        score: score,
+                        timestamp: Date.now()
+                    });
+                    isUpdated = true;
+                }
+
+                if (statusMsg) {
+                    if (isUpdated) {
+                        statusMsg.innerText = "최고 점수가 최고 기록으로 등록되었습니다! ✨";
+                        statusMsg.className = "mt-2 text-xs font-bold text-emerald-200 font-sans-subtitle";
+                    } else {
+                        statusMsg.innerText = "이전 최고 점수가 더 높아 기록이 유지됩니다. 👍";
+                        statusMsg.className = "mt-2 text-xs font-bold text-yellow-200 font-sans-subtitle";
+                    }
+                }
+            } catch (e) {
+                console.error("Firestore Save Error:", e);
+                if (statusMsg) {
+                    statusMsg.innerText = "네트워크 문제로 점수 저장에 실패했습니다. (인터넷을 확인해주세요)";
+                    statusMsg.className = "mt-2 text-xs font-bold text-rose-200 font-sans-subtitle";
+                }
+            } finally {
+                if (restartBtn) restartBtn.disabled = false;
             }
         };
 
+        // Realtime Leaderboard Listener (Top 10 display with onSnapshot)
         let unsubscribe = null;
         window.listenToLeaderboard = (callback) => {
-            if(!user) {
-                callback([]);
-                return;
-            }
-            const dbRef = collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
+            const scoresCollRef = collection(db, 'artifacts', appId, 'public', 'data', 'scores');
+            
             if (unsubscribe) unsubscribe();
-            unsubscribe = onSnapshot(dbRef, (snapshot) => {
+            
+            // RULE 2: No complex query order Bys with multiple conditions
+            // Fetch all and sort purely in JavaScript memory to avoid index requirements
+            unsubscribe = onSnapshot(scoresCollRef, (snapshot) => {
                 let docs = [];
-                snapshot.forEach(doc => docs.push(doc.data()));
-                docs.sort((a,b) => b.score - a.score);
-                callback(docs.slice(0, 50)); 
+                snapshot.forEach(docSnap => {
+                    docs.push(docSnap.data());
+                });
+
+                // Rule: Highest score first. If tied, earlier timestamp comes first
+                docs.sort((a, b) => {
+                    if (b.score !== a.score) {
+                        return b.score - a.score;
+                    }
+                    return a.timestamp - b.timestamp;
+                });
+
+                // Return Top 10 items
+                callback(docs.slice(0, 10)); 
             }, (error) => {
-                console.error("Listen error", error);
+                console.error("Leaderboard Listener Error:", error);
                 callback([]);
             });
         };
+
         window.stopLeaderboardListen = () => {
             if (unsubscribe) unsubscribe();
         };
     </script>
 
+    <!-- GAME ENGINE & UI SCRIPT -->
     <script>
+        // LocalStorage Nickname Key Constant
+        const NICKNAME_STORAGE_KEY = "music_game_nickname";
+
+        // Load Nickname from LocalStorage on Startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedNick = localStorage.getItem(NICKNAME_STORAGE_KEY);
+            if (savedNick) {
+                const nickInput = document.getElementById('nicknameInput');
+                if (nickInput) nickInput.value = savedNick;
+            }
+        });
+
         // Standard Pitch Reference: A4 = 440Hz
         const notesTreble = [
             { name: '도', step: -6, pitch: "C4", desc: "가온 도! 오선보 바로 아래 첫 번째 덧줄에 걸친 위치입니다." },
@@ -437,7 +527,7 @@
 
         // Multi-Stage Game State Variables
         let isPracticeMode = false;
-        let currentStage = 1; // 1: Treble(10Q), 2: Bass(10Q), 3: Mixed(5 Treble + 5 Bass = 10Q)
+        let currentStage = 1; 
         let currentClef = 'treble';
 
         let currentNote = null;
@@ -539,12 +629,26 @@
 
         async function startGame() {
             const nickInput = document.getElementById('nicknameInput');
-            nickname = nickInput.value.trim();
-            
-            if (!nickname) {
-                nickInput.classList.add('shake-animation', 'border-rose-500');
-                setTimeout(() => nickInput.classList.remove('shake-animation', 'border-rose-500'), 400);
+            const errorMsg = document.getElementById('nicknameErrorMsg');
+            nickname = nickInput ? nickInput.value.trim() : "";
+
+            // Validate Nickname Length (2 to 10 characters)
+            if (!nickname || nickname.length < 2 || nickname.length > 10) {
+                if (errorMsg) errorMsg.classList.remove('hidden');
+                if (nickInput) {
+                    nickInput.classList.add('shake-animation', 'border-rose-500');
+                    setTimeout(() => nickInput.classList.remove('shake-animation', 'border-rose-500'), 400);
+                }
                 return;
+            }
+
+            if (errorMsg) errorMsg.classList.add('hidden');
+
+            // Save Nickname to LocalStorage
+            try {
+                localStorage.setItem(NICKNAME_STORAGE_KEY, nickname);
+            } catch (e) {
+                console.warn("LocalStorage save error:", e);
             }
 
             await initAudio();
@@ -897,13 +1001,13 @@
             if (isCorrect) {
                 bar.className = "w-full max-w-[340px] mt-2 bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3 flex flex-col items-center text-center z-10 transition-all";
                 titleEl.className = "text-sm font-bold font-subtitle text-emerald-600 mb-0.5";
-                titleEl.innerText = "✨ 정답입니다! 👏";
-                descEl.innerHTML = `<span class="font-bold text-slate-900">'${currentNote.name}'</span>이(가) 맞습니다!<br>${currentNote.desc}`;
+                titleEl.textContent = "✨ 정답입니다! 👏";
+                descEl.textContent = `'${currentNote.name}'이(가) 맞습니다! ${currentNote.desc}`;
             } else {
                 bar.className = "w-full max-w-[340px] mt-2 bg-rose-50 border-2 border-rose-200 rounded-2xl p-3 flex flex-col items-center text-center z-10 transition-all";
                 titleEl.className = "text-sm font-bold font-subtitle text-rose-600 mb-0.5";
-                titleEl.innerText = `❌ 틀렸습니다! 정답은 '${currentNote.name}' (내가 택한 답: ${userAnswer})`;
-                descEl.innerHTML = `${currentNote.desc}`;
+                titleEl.textContent = `❌ 틀렸습니다! 정답은 '${currentNote.name}' (내가 택한 답: ${userAnswer})`;
+                descEl.textContent = currentNote.desc;
             }
         }
 
@@ -962,7 +1066,10 @@
             gameOverDiv.classList.remove('hidden');
             gameOverDiv.classList.add('flex');
             
-            document.getElementById('finalNickname').innerText = nickname || "연습생";
+            // XSS Prevention using textContent
+            const nickEl = document.getElementById('finalNickname');
+            if (nickEl) nickEl.textContent = nickname || "연습생";
+            
             document.getElementById('finalScoreDisplay').innerText = score;
 
             playFanfareSound();
@@ -977,26 +1084,43 @@
                     const listEl = document.getElementById('leaderboardList');
                     listEl.innerHTML = '';
                     if (ranks.length === 0) {
-                        listEl.innerHTML = '<li class="text-center text-slate-400 text-sm py-4 font-sans-subtitle">아직 기록이 없습니다.</li>';
+                        const emptyLi = document.createElement('li');
+                        emptyLi.className = "text-center text-slate-400 text-sm py-4 font-sans-subtitle";
+                        emptyLi.textContent = "아직 기록이 없습니다.";
+                        listEl.appendChild(emptyLi);
                         return;
                     }
+
+                    // Render Top 10 Ranks safely
                     ranks.forEach((r, idx) => {
                         const isMe = (r.nickname === nickname && r.score === score);
                         const li = document.createElement('li');
                         li.className = `flex justify-between items-center p-3.5 rounded-2xl ${isMe ? 'bg-indigo-100/80 border-2 border-indigo-300 font-bold' : 'bg-white border border-slate-100'}`;
                         
-                        let badge = `<span class="w-6 text-center font-bold text-slate-400 font-subtitle">${idx + 1}</span>`;
-                        if(idx === 0) badge = `<span class="w-6 text-center text-lg">🥇</span>`;
-                        else if(idx === 1) badge = `<span class="w-6 text-center text-lg">🥈</span>`;
-                        else if(idx === 2) badge = `<span class="w-6 text-center text-lg">🥉</span>`;
+                        const leftDiv = document.createElement('div');
+                        leftDiv.className = "flex items-center";
 
-                        li.innerHTML = `
-                            <div class="flex items-center">
-                                ${badge}
-                                <span class="ml-2.5 font-bold text-slate-700 font-subtitle text-lg">${r.nickname}</span>
-                            </div>
-                            <span class="font-bold text-indigo-600 font-subtitle text-lg">${r.score}점</span>
-                        `;
+                        const badgeSpan = document.createElement('span');
+                        if(idx === 0) badgeSpan.textContent = '🥇';
+                        else if(idx === 1) badgeSpan.textContent = '🥈';
+                        else if(idx === 2) badgeSpan.textContent = '🥉';
+                        else badgeSpan.textContent = `${idx + 1}`;
+                        
+                        badgeSpan.className = `w-6 text-center font-bold font-subtitle ${idx < 3 ? 'text-lg' : 'text-slate-400'}`;
+
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = "ml-2.5 font-bold text-slate-700 font-subtitle text-lg";
+                        nameSpan.textContent = r.nickname; // Safe assignment against XSS
+
+                        leftDiv.appendChild(badgeSpan);
+                        leftDiv.appendChild(nameSpan);
+
+                        const scoreSpan = document.createElement('span');
+                        scoreSpan.className = "font-bold text-indigo-600 font-subtitle text-lg";
+                        scoreSpan.textContent = `${r.score}점`;
+
+                        li.appendChild(leftDiv);
+                        li.appendChild(scoreSpan);
                         listEl.appendChild(li);
                     });
                 });
