@@ -59,6 +59,26 @@
             animation: fire 0.8s infinite;
         }
 
+        @keyframes combo-popup {
+            0% { transform: translate(-50%, -30%) scale(0.7); opacity: 0; }
+            30% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            70% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -80%) scale(1); opacity: 0; }
+        }
+        .combo-popup-anim {
+            animation: combo-popup 0.7s ease-out forwards;
+        }
+
+        @keyframes score-popup {
+            0% { transform: translate(-50%, -10%) scale(0.6); opacity: 0; }
+            25% { transform: translate(-50%, -40%) scale(1.15); opacity: 1; }
+            70% { transform: translate(-50%, -45%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -75%) scale(1); opacity: 0; }
+        }
+        .score-popup-anim {
+            animation: score-popup 0.7s ease-out forwards;
+        }
+
         @keyframes drum-vibrate {
             0%, 100% { transform: scale(1) rotate(0deg); }
             25% { transform: scale(1.05) rotate(-3deg); }
@@ -87,12 +107,12 @@
         <canvas id="fireworksCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-50"></canvas>
 
         <!-- START SCREEN -->
-        <div id="startScreen" class="absolute inset-0 z-40 bg-gradient-to-b from-sky-100 via-indigo-50 to-purple-100 flex flex-col items-center justify-between p-5 sm:p-6 pb-6 transition-opacity duration-500 overflow-y-auto">
+        <div id="startScreen" class="absolute inset-0 z-40 bg-gradient-to-b from-sky-100 via-indigo-50 to-purple-100 flex flex-col items-center justify-between p-5 sm:p-6 pb-12 transition-opacity duration-500 overflow-y-auto">
             <div class="w-full text-center mt-3 sm:mt-5">
                 <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight font-subtitle movie-caption">계이름 마스터</h1>
             </div>
 
-            <div class="w-full my-auto space-y-3.5 py-3">
+            <div class="w-full my-auto space-y-3.5 py-4">
                 <div class="bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl shadow-sm border-2 border-indigo-100">
                     <label class="block text-xs font-bold text-slate-400 mb-1 ml-2 text-left font-sans-subtitle">플레이어 닉네임 (2~10자)</label>
                     <input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요 ⭐" autocomplete="off" minlength="2" maxlength="10" class="w-full px-4 py-2.5 rounded-xl bg-indigo-50/50 border-2 border-indigo-100 focus:border-indigo-400 focus:bg-white focus:outline-none text-center font-bold text-slate-700 placeholder-indigo-300 transition-all font-subtitle text-base sm:text-lg">
@@ -121,7 +141,7 @@
                 </button>
             </div>
 
-            <div class="w-full flex flex-col items-center space-y-1.5 pb-4">
+            <div class="w-full flex flex-col items-center space-y-1.5 pb-8">
                 <div class="text-[11px] font-bold text-slate-400 text-center bg-white/60 px-3 py-1 rounded-full border border-slate-200/50 font-sans-subtitle">
                     🔊 볼륨을 켜면 피아노 소리가 들려요! (A4 = 440Hz 기준)
                 </div>
@@ -132,13 +152,13 @@
         </div>
 
         <!-- TUTORIAL SCREEN -->
-        <div id="tutorialScreen" class="absolute inset-0 z-40 hidden bg-white flex-col justify-between p-5 pb-6 overflow-y-auto">
+        <div id="tutorialScreen" class="absolute inset-0 z-40 hidden bg-white flex-col justify-between p-5 pb-10 overflow-y-auto">
             <div class="w-full text-center mt-2">
                 <span class="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-0.5 rounded-full font-sans-subtitle">마스터 가이드</span>
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-subtitle mt-1">🎼 계이름 쉽게 읽는 핵심 비법!</h2>
             </div>
 
-            <div class="my-auto space-y-3 text-xs text-slate-700 font-sans-subtitle leading-relaxed py-3">
+            <div class="my-auto space-y-3 text-xs text-slate-700 font-sans-subtitle leading-relaxed py-4">
                 <!-- Lesson 1: Treble -->
                 <div class="bg-sky-50 p-3.5 rounded-2xl border border-sky-100">
                     <h3 class="font-bold text-sky-700 text-sm font-subtitle mb-0.5">1. 높은음자리표 (𝄞) 읽는 법</h3>
@@ -160,7 +180,7 @@
                 </div>
             </div>
 
-            <div class="w-full flex flex-col items-center space-y-2 pb-4">
+            <div class="w-full flex flex-col items-center space-y-2 pb-6">
                 <button onclick="startPracticeGame()" class="w-full py-3.5 bg-amber-400 hover:bg-amber-500 active:scale-95 transition-all rounded-2xl text-slate-900 font-bold text-lg font-subtitle shadow-md">
                     연습 게임 시작하기 🎮
                 </button>
@@ -171,7 +191,7 @@
         </div>
 
         <!-- STAGE CLEAR INTERMEDIATE MODAL -->
-        <div id="stageClearScreen" class="absolute inset-0 z-40 hidden bg-white/95 backdrop-blur-md flex-col items-center justify-between p-6 pb-6">
+        <div id="stageClearScreen" class="absolute inset-0 z-40 hidden bg-white/95 backdrop-blur-md flex-col items-center justify-between p-6 pb-10">
             <div class="w-full text-center mt-12">
                 <div class="text-4xl mb-1">🎉</div>
                 <h2 class="text-2xl sm:text-3xl font-bold text-indigo-600 font-subtitle movie-caption" id="stageClearTitle">1단계 클리어!</h2>
@@ -183,7 +203,7 @@
                 <div class="text-3xl sm:text-4xl font-extrabold text-indigo-600 font-subtitle" id="stageCurrentScore">0</div>
             </div>
 
-            <div class="w-full flex flex-col items-center space-y-2 pb-4">
+            <div class="w-full flex flex-col items-center space-y-2 pb-6">
                 <button onclick="nextStage()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-2xl text-white font-bold text-lg font-subtitle shadow-md">
                     다음 단계로 ➡️
                 </button>
@@ -193,8 +213,18 @@
             </div>
         </div>
 
+        <!-- COUNTDOWN SCREEN -->
+        <div id="countdownScreen" class="absolute inset-0 z-50 hidden bg-slate-900/90 backdrop-blur-sm flex-col items-center justify-center p-6 text-center">
+            <div id="countdownNumber" class="text-7xl sm:text-8xl font-black font-subtitle text-amber-300 pop-animation">
+                3
+            </div>
+            <div class="text-sm font-bold text-slate-300 font-sans-subtitle mt-4">
+                준비하세요!
+            </div>
+        </div>
+
         <!-- DRUM ROLL SUSPENSE LOADING SCREEN -->
-        <div id="drumRollScreen" class="absolute inset-0 z-50 hidden bg-slate-900 text-white flex-col items-center justify-between p-6 pb-6 text-center">
+        <div id="drumRollScreen" class="absolute inset-0 z-50 hidden bg-slate-900 text-white flex-col items-center justify-between p-6 pb-10 text-center">
             <div class="mt-14">
                 <span class="text-xs bg-amber-400 text-slate-900 px-3 py-1 rounded-full font-bold font-sans-subtitle">결과 발표 임박</span>
                 <h2 class="text-2xl sm:text-3xl font-bold font-subtitle mt-2">최종 점수를 집계 중입니다...</h2>
@@ -207,7 +237,7 @@
                 </div>
             </div>
 
-            <div class="text-[10px] text-slate-500 font-sans-subtitle pb-4">
+            <div class="text-[10px] text-slate-500 font-sans-subtitle pb-6">
                 ©️2026. 걍샤T. All rights reserved.
             </div>
         </div>
@@ -262,9 +292,14 @@
                     </svg>
                 </div>
                 
-                <!-- Feedback overlay (+10 text) -->
-                <div id="feedbackText" class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-black text-emerald-500 opacity-0 pointer-events-none transition-all duration-300 transform scale-50 font-subtitle">
-                    +10
+                <!-- Feedback overlay (+10 text) and Combo Popup right above it -->
+                <div class="absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-50">
+                    <div id="comboPopupText" class="text-lg sm:text-xl font-black text-amber-500 font-subtitle combo-popup-anim drop-shadow-md opacity-0 mb-1">
+                        3 COMBO!
+                    </div>
+                    <div id="feedbackText" class="text-3xl font-black text-emerald-500 opacity-0 font-subtitle score-popup-anim">
+                        +10
+                    </div>
                 </div>
 
                 <!-- Non-Obstructive Practice Explanation Bar below Staff -->
@@ -282,7 +317,7 @@
             </div>
 
             <!-- Answer Buttons Area -->
-            <div id="answerButtonsArea" class="p-3 pb-6 bg-white shadow-[0_-10px_25px_rgba(0,0,0,0.03)] rounded-t-2xl border-t-2 border-indigo-50 flex flex-col items-center">
+            <div id="answerButtonsArea" class="p-3 pb-10 bg-white shadow-[0_-10px_25px_rgba(0,0,0,0.03)] rounded-t-2xl border-t-2 border-indigo-50 flex flex-col items-center">
                 <div class="text-center text-[11px] text-indigo-400 font-bold mb-1.5 flex items-center justify-center space-x-1 font-sans-subtitle">
                     <span>🎹</span>
                     <span>알맞은 계이름을 눌러주세요!</span>
@@ -332,7 +367,7 @@
                 </ul>
             </div>
             
-            <div class="p-3 pb-6 bg-white border-t border-slate-100 flex flex-col items-center">
+            <div class="p-3 pb-10 bg-white border-t border-slate-100 flex flex-col items-center">
                 <button id="restartBtn" onclick="showStartScreen()" class="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-xl text-white font-bold text-lg font-subtitle shadow-md mb-2">처음부터 다시 도전하기 🔄</button>
                 <div class="text-[10px] text-slate-400 font-sans-subtitle">
                     ©️2026. 걍샤T. All rights reserved.
@@ -636,18 +671,57 @@
 
             await initAudio();
             
-            isPracticeMode = false;
-            score = 0;
-            combo = 0;
-            currentStage = 1;
-            hidePracticeAnswerBar();
-            startStage(1);
-
-            document.getElementById('startScreen').classList.add('opacity-0');
+            const startDiv = document.getElementById('startScreen');
+            startDiv.classList.add('opacity-0');
             setTimeout(() => {
-                document.getElementById('startScreen').classList.add('hidden');
-                document.getElementById('gameScreen').classList.remove('hidden');
+                startDiv.classList.add('hidden');
+                startDiv.classList.remove('opacity-0');
             }, 500);
+
+            const countdownDiv = document.getElementById('countdownScreen');
+            countdownDiv.classList.remove('hidden');
+            countdownDiv.classList.add('flex');
+
+            let count = 3;
+            const countNumEl = document.getElementById('countdownNumber');
+            countNumEl.textContent = count;
+            
+            if (drumSynth) {
+                drumSynth.triggerAttackRelease("8n");
+            }
+
+            const countInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countNumEl.textContent = count;
+                    countNumEl.classList.remove('pop-animation');
+                    void countNumEl.offsetWidth;
+                    countNumEl.classList.add('pop-animation');
+                    if (drumSynth) {
+                        drumSynth.triggerAttackRelease("8n");
+                    }
+                } else if (count === 0) {
+                    countNumEl.textContent = "시작! 🚀";
+                    countNumEl.classList.remove('pop-animation');
+                    void countNumEl.offsetWidth;
+                    countNumEl.classList.add('pop-animation');
+                    if (pianoSynth) {
+                        pianoSynth.triggerAttackRelease("C5", "8n");
+                    }
+                } else {
+                    clearInterval(countInterval);
+                    countdownDiv.classList.add('hidden');
+                    countdownDiv.classList.remove('flex');
+                    
+                    isPracticeMode = false;
+                    score = 0;
+                    combo = 0;
+                    currentStage = 1;
+                    hidePracticeAnswerBar();
+                    document.getElementById('gameScreen').classList.remove('hidden');
+                    startStage(1);
+                }
+            }, 800);
         }
 
         function shuffleArray(array) {
@@ -942,6 +1016,11 @@
                 playPianoCorrectSound(currentNote.pitch, combo);
                 showScoreFeedback(points);
                 spawnFireworks();
+                
+                if (combo >= 2) {
+                    showComboPopup(combo);
+                }
+
                 updateScoreUI();
 
                 if (isPracticeMode) {
@@ -969,6 +1048,15 @@
                     }
                 }, 400);
             }
+        }
+
+        function showComboPopup(currentCombo) {
+            const comboPopupText = document.getElementById('comboPopupText');
+            comboPopupText.textContent = `${currentCombo} COMBO!`;
+            
+            comboPopupText.classList.remove('combo-popup-anim');
+            void comboPopupText.offsetWidth;
+            comboPopupText.classList.add('combo-popup-anim');
         }
 
         function showPracticeAnswerBar(isCorrect, userAnswer) {
@@ -1151,12 +1239,9 @@
             const fb = document.getElementById('feedbackText');
             fb.innerText = `+${points}`;
             
-            fb.classList.remove('opacity-0', 'scale-50', '-translate-y-10');
-            fb.classList.add('opacity-100', 'scale-100');
-            
+            fb.classList.remove('score-popup-anim');
             void fb.offsetWidth;
-            
-            fb.classList.add('opacity-0', 'scale-125', '-translate-y-10');
+            fb.classList.add('score-popup-anim');
         }
 
         const canvas = document.getElementById('fireworksCanvas');
