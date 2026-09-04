@@ -294,10 +294,10 @@
                 
                 <!-- Feedback overlay (+10 text) and Combo Popup right above it -->
                 <div class="absolute top-[32%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-50">
-                    <div id="comboPopupText" class="text-lg sm:text-xl font-black text-amber-500 font-subtitle combo-popup-anim drop-shadow-md opacity-0 mb-1">
+                    <div id="comboPopupText" class="text-lg sm:text-xl font-black text-amber-500 font-subtitle drop-shadow-md opacity-0 mb-1">
                         3 COMBO!
                     </div>
-                    <div id="feedbackText" class="text-3xl font-black text-emerald-500 opacity-0 font-subtitle score-popup-anim">
+                    <div id="feedbackText" class="text-3xl font-black text-emerald-500 opacity-0 font-subtitle">
                         +10
                     </div>
                 </div>
@@ -850,6 +850,12 @@
 
         function loadNextNote() {
             hidePracticeAnswerBar();
+
+            // 이전 문제의 팝업 애니메이션 클래스 초기화
+            const comboPopupText = document.getElementById('comboPopupText');
+            const feedbackText = document.getElementById('feedbackText');
+            if (comboPopupText) comboPopupText.classList.remove('combo-popup-anim');
+            if (feedbackText) feedbackText.classList.remove('score-popup-anim');
 
             if (currentQuestion >= maxQuestionsForCurrentStage) {
                 if (isPracticeMode) {
