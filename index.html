@@ -1,0 +1,844 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.AppleSystemUIFontMonospaced'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px '.AppleSystemUIFontMonospaced'; min-height: 15.0px}
+    span.s1 {font: 12.0px 'Apple Symbols'}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ko"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;계이름 마스터는 누구?!&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&amp;family=Jua&amp;family=Noto+Sans+KR:wght@400;700;900&amp;display=swap');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Jua', 'Gowun Dodum', 'Noto Sans KR', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f0f4ff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>touch-action: manipulation; /* Prevents double-tap zoom on mobile */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden; /* Prevent scrolling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.font-jua {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Jua', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes shake {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0%, 100% { transform: translateX(0); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>20%, 60% { transform: translateX(-6px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>40%, 80% { transform: translateX(6px); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.shake-animation {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: shake 0.4s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes pop {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0% { transform: scale(0.8); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>50% { transform: scale(1.15); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>100% { transform: scale(1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pop-animation {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fire {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0% { color: #fbbf24; text-shadow: 0 0 8px #f59e0b; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>50% { color: #f43f5e; text-shadow: 0 0 15px #ef4444; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>100% { color: #fbbf24; text-shadow: 0 0 8px #f59e0b; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.combo-fire {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fire 0.8s infinite;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* SVG Musical Notation Styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.staff-line { stroke: #334155; stroke-width: 2.5; stroke-linecap: round; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.ledger-line { stroke: #334155; stroke-width: 3.5; stroke-linecap: round; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.note-head { fill: #1e293b; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.note-stem { stroke: #1e293b; stroke-width: 3.5; stroke-linecap: round; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.clef-shape { fill: #1e293b; user-select: none; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Hide scrollbars for the main app container */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.app-container::-webkit-scrollbar { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.app-container { -ms-overflow-style: none; scrollbar-width: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="flex items-center justify-center w-full h-screen p-0 sm:p-4 bg-indigo-50/50"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="app-container relative w-full max-w-md h-full sm:h-[92vh] bg-white sm:rounded-[2.5rem] shadow-2xl border-0 sm:border-8 border-indigo-100 overflow-hidden flex flex-col"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Canvas for Fireworks overlay --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;canvas id="fireworksCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-50"&gt;&lt;/canvas&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- START SCREEN --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="startScreen" class="absolute inset-0 z-40 bg-gradient-to-b from-sky-100 via-indigo-50 to-purple-100 flex flex-col items-center justify-between p-6 transition-opacity duration-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-full text-center mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h1 class="text-4xl font-black text-slate-800 tracking-tight font-jua"&gt;계이름 마스터&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-indigo-400 mt-2 font-bold"&gt;신나고 빠르게 계이름 읽기 연습!&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-full my-auto space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white/80 backdrop-blur-sm p-4 rounded-3xl shadow-sm border-2 border-indigo-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="block text-xs font-bold text-slate-400 mb-1 ml-2 text-left"&gt;플레이어 닉네임&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요 ⭐" autocomplete="off" maxlength="10" class="w-full px-4 py-3 rounded-2xl bg-indigo-50/50 border-2 border-indigo-100 focus:border-indigo-400 focus:bg-white focus:outline-none text-center font-bold text-slate-700 placeholder-indigo-300 transition-all font-jua text-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button onclick="startGame('treble')" class="group relative w-full flex items-center justify-between p-5 bg-white rounded-3xl shadow-md border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg active:scale-95 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs bg-indigo-100 text-indigo-600 px-2.5 py-0.5 rounded-full font-bold mb-1 inline-block"&gt;추천&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 class="text-2xl font-bold text-indigo-600 font-jua"&gt;높은음자리표&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-slate-400 text-xs mt-0.5"&gt;가온 도 ~ 고음 솔&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-5xl group-hover:scale-110 transition-transform text-indigo-500 font-serif leading-none pr-2"&gt;<span class="s1">𝄞</span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button onclick="startGame('bass')" class="group relative w-full flex items-center justify-between p-5 bg-white rounded-3xl shadow-md border-2 border-pink-200 hover:border-pink-400 hover:shadow-lg active:scale-95 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs bg-pink-100 text-pink-600 px-2.5 py-0.5 rounded-full font-bold mb-1 inline-block"&gt;저음역&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 class="text-2xl font-bold text-pink-600 font-jua"&gt;낮은음자리표&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-slate-400 text-xs mt-0.5"&gt;저음 미 ~ 가온 도&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-5xl group-hover:scale-110 transition-transform text-pink-500 font-serif leading-none pr-2"&gt;<span class="s1">𝄢</span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mb-2 text-xs font-bold text-slate-400 text-center bg-white/60 px-4 py-2 rounded-full border border-slate-200/50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>🔊 볼륨을 켜면 피아노 소리가 들려요! (A4 = 440Hz 기준)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- GAME SCREEN --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="gameScreen" class="absolute inset-0 z-30 flex flex-col hidden bg-slate-50"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Header: Score and Combo --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;header class="p-4 bg-white border-b-2 border-indigo-50 rounded-b-3xl shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center justify-between mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button onclick="showStartScreen()" class="p-2 text-slate-400 hover:text-indigo-600 active:bg-indigo-50 rounded-2xl transition-colors"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"&gt;&lt;/path&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-1 text-sm font-black text-indigo-600 bg-indigo-100/70 px-4 py-1.5 rounded-full font-jua"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;Q.&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span id="questionCount" class="text-base"&gt;1 / 20&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-center bg-amber-50 px-3 py-1 rounded-2xl border border-amber-200/60"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-[10px] text-amber-500 font-bold uppercase tracking-tight"&gt;Combo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="comboDisplay" class="text-base font-black text-amber-400 leading-none"&gt;0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-center bg-indigo-50 px-3 py-1 rounded-2xl border border-indigo-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-[10px] text-indigo-400 font-bold uppercase tracking-tight"&gt;Score&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="scoreDisplay" class="text-base font-black text-indigo-600 leading-none"&gt;0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Timer Bar --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center space-x-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-xs"&gt;⏱️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/60"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="timerBar" class="h-full bg-gradient-to-r from-indigo-400 to-purple-500 w-full rounded-full transition-all duration-75 ease-linear"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Staff Area (SVG based) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex-1 flex flex-col items-center justify-center relative w-full px-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="staffContainer" class="w-full max-w-[340px] aspect-[4/3] relative bg-white rounded-3xl p-2 shadow-sm border-2 border-indigo-50 flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;svg id="staffSVG" viewBox="0 0 300 240" class="w-full h-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Staff Lines --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;g id="staffLines"&gt;&lt;/g&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Clef (SVG Group for Vector Exact Positioning) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;g id="clefGroup"&gt;&lt;/g&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Dynamic Notes --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;g id="noteGroup"&gt;&lt;/g&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Feedback overlay (+10 text) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="feedbackText" class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-black text-emerald-500 opacity-0 pointer-events-none transition-all duration-300 transform scale-50 font-jua"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>+10</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Answer Buttons Area --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-3 pb-5 bg-white shadow-[0_-10px_25px_rgba(0,0,0,0.03)] rounded-t-[2rem] border-t-2 border-indigo-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-center text-xs text-indigo-400 font-bold mb-2.5 flex items-center justify-center space-x-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;🎹&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;알맞은 계이름을 눌러주세요!&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- 7 Note buttons in a single horizontal row --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-7 gap-1.5 mb-2.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-rose-50 hover:bg-rose-100 text-rose-600 border-2 border-rose-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('도')"&gt;도&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-orange-50 hover:bg-orange-100 text-orange-600 border-2 border-orange-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('레')"&gt;레&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-amber-50 hover:bg-amber-100 text-amber-600 border-2 border-amber-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('미')"&gt;미&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-2 border-emerald-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('파')"&gt;파&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-sky-50 hover:bg-sky-100 text-sky-600 border-2 border-sky-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('솔')"&gt;솔&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border-2 border-indigo-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('라')"&gt;라&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button class="answer-btn bg-purple-50 hover:bg-purple-100 text-purple-600 border-2 border-purple-200 active:scale-95 rounded-xl py-3 text-lg sm:text-xl font-bold font-jua shadow-sm transition-all text-center px-0" onclick="checkAnswer('시')"&gt;시&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Full-width Skip/Pass button underneath --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-500 border-2 border-slate-200 active:scale-95 rounded-xl py-2.5 text-base font-bold font-jua shadow-sm transition-all flex items-center justify-center space-x-1" onclick="skipNote()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;패스 ⏩&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- GAME OVER &amp; RANKING SCREEN --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="gameOverScreen" class="absolute inset-0 z-50 hidden bg-slate-50 flex-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-6 text-center bg-gradient-to-b from-indigo-500 to-purple-600 text-white rounded-b-3xl shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-4xl block mb-1"&gt;🎉&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-black font-jua mb-1"&gt;미션 완료!&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-indigo-100 text-sm font-bold mb-3"&gt;&lt;span id="finalNickname" class="text-yellow-300 font-extrabold"&gt;&lt;/span&gt;님의 최종 점수&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-5xl font-black font-jua text-yellow-300 drop-shadow-md" id="finalScoreDisplay"&gt;0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex-1 overflow-y-auto p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-lg font-bold text-slate-700 mb-3 flex items-center justify-center space-x-1 font-jua"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;🏆&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;명예의 전당 Top 50&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span&gt;🏆&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;ul id="leaderboardList" class="space-y-2 pb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;li class="text-center text-slate-400 text-sm py-4"&gt;순위를 불러오는 중...&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-4 bg-white border-t border-slate-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button onclick="showStartScreen()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition-all rounded-2xl text-white font-bold text-xl font-jua shadow-md"&gt;다시 도전하기 🔄&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="module"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const app = initializeApp(firebaseConfig);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const auth = getAuth(app);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const db = getFirestore(app);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let user = null;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const initAuth = async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (typeof __initial_auth_token !== 'undefined' &amp;&amp; __initial_auth_token) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await signInWithCustomToken(auth, __initial_auth_token);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await signInAnonymously(auth);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Auth init failed", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>initAuth();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>onAuthStateChanged(auth, (u) =&gt; {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>user = u;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.saveScoreToFirebase = async (nickname, score) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!user) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dbRef = collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>await addDoc(dbRef, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>nickname: nickname,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>score: score,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>timestamp: Date.now()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch(e) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Save error", e);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let unsubscribe = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.listenToLeaderboard = (callback) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!user) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>callback([]);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dbRef = collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (unsubscribe) unsubscribe();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>unsubscribe = onSnapshot(dbRef, (snapshot) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let docs = [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>snapshot.forEach(doc =&gt; docs.push(doc.data()));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>docs.sort((a,b) =&gt; b.score - a.score);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>callback(docs.slice(0, 50));<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, (error) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Listen error", error);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>callback([]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.stopLeaderboardListen = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (unsubscribe) unsubscribe();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Standard Pitch Reference: A4 = 440Hz</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Notes Data (Treble Clef &amp; Bass Clef)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const notesTreble = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '도', step: -6, pitch: "C4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '레', step: -5, pitch: "D4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '미', step: -4, pitch: "E4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '파', step: -3, pitch: "F4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '솔', step: -2, pitch: "G4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '라', step: -1, pitch: "A4" }, // Standard A4 (440Hz)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '시', step: 0, pitch: "B4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '도', step: 1, pitch: "C5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '레', step: 2, pitch: "D5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '미', step: 3, pitch: "E5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '파', step: 4, pitch: "F5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '솔', step: 5, pitch: "G5" }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const notesBass = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '미', step: -6, pitch: "E2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '파', step: -5, pitch: "F2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '솔', step: -4, pitch: "G2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '라', step: -3, pitch: "A2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '시', step: -2, pitch: "B2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '도', step: -1, pitch: "C3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '레', step: 0, pitch: "D3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '미', step: 1, pitch: "E3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '파', step: 2, pitch: "F3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '솔', step: 3, pitch: "G3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '라', step: 4, pitch: "A3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '시', step: 5, pitch: "B3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: '도', step: 6, pitch: "C4" }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Game State Variables</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentMode = 'treble';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentNote = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let score = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let combo = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let isProcessing = false;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let nickname = "";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentQuestion = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const MAX_QUESTIONS = 20;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Timer Variables</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const TIME_LIMIT = 10000; // 10 seconds per question</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let startTime;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let timerInterval;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Tone.js Instruments (Piano Sound Synthesizer &amp; Effects)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let pianoSynth, wrongSynth, cheerNoise, cheerFilter;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function initAudio() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (Tone.context.state !== 'running') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>await Tone.start();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!pianoSynth) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>pianoSynth = new Tone.PolySynth(Tone.Synth, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>volume: 0,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>oscillator: { type: "triangle" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>envelope: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>attack: 0.005,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>decay: 1.5,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>sustain: 0.15,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>release: 0.8</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}).toDestination();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>wrongSynth = new Tone.Synth({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>volume: -8,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>oscillator: { type: "sawtooth" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>envelope: { attack: 0.01, decay: 0.25, sustain: 0, release: 0.1 }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}).toDestination();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>cheerFilter = new Tone.Filter(300, "lowpass").toDestination();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cheerNoise = new Tone.NoiseSynth({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>volume: -6,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>noise: { type: "pink" },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>envelope: { attack: 0.1, decay: 1.2, sustain: 0, release: 0.1 }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}).connect(cheerFilter);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function startGame(mode) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const nickInput = document.getElementById('nicknameInput');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>nickname = nickInput.value.trim();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!nickname) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>nickInput.classList.add('shake-animation', 'border-rose-500');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; nickInput.classList.remove('shake-animation', 'border-rose-500'), 400);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>await initAudio();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentMode = mode;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>score = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>combo = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentQuestion = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateScoreUI();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('startScreen').classList.add('opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('startScreen').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('gameScreen').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>initStaff();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loadNextNote();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 500);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showStartScreen() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stopTimer();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(window.stopLeaderboardListen) window.stopLeaderboardListen();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('gameScreen').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('gameOverScreen').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const startDiv = document.getElementById('startScreen');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>startDiv.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>startDiv.classList.remove('opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 10);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// SVG Staff Exact Line Y Coordinates:</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Line 5 (Top, F5/A3): Y = 88 <span class="Apple-converted-space">  </span>[Space 4: Y = 96]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Line 4 (D5/F3): <span class="Apple-converted-space">    </span>Y = 104<span class="Apple-converted-space">  </span>[Space 3: Y = 112]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Line 3 (Mid, B4/D3):Y = 120<span class="Apple-converted-space">  </span>[Space 2: Y = 128]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Line 2 (G4/B2): <span class="Apple-converted-space">    </span>Y = 136<span class="Apple-converted-space">  </span>[Space 1: Y = 144]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Line 1 (Bot, E4/G2): Y = 152</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const SVG_Y_CENTER = 120;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const LINE_SPACING = 16;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const STEP_SIZE = LINE_SPACING / 2; // 8px</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function initStaff() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const linesGroup = document.getElementById('staffLines');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>linesGroup.innerHTML = '';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Draw 5 main staff lines</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i = -2; i &lt;= 2; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const y = SVG_Y_CENTER + (i * LINE_SPACING);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const line = document.createElementNS("http://www.w3.org/2000/svg", "line");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>line.setAttribute("x1", "20");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>line.setAttribute("x2", "280");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>line.setAttribute("y1", y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>line.setAttribute("y2", y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>line.setAttribute("class", "staff-line");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>linesGroup.appendChild(line);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Draw Vector Perfect Musical Clef</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const clefGroup = document.getElementById('clefGroup');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>clefGroup.innerHTML = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(currentMode === 'treble') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// High Quality Vector High G-Clef</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const text = document.createElementNS("http://www.w3.org/2000/svg", "text");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.textContent = '<span class="s1">𝄞</span>';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.setAttribute("x", "20");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.setAttribute("y", "162");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.setAttribute("font-size", "110");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.setAttribute("class", "clef-shape");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>text.setAttribute("font-family", "serif");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>clefGroup.appendChild(text);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// BASS CLEF (<span class="s1">𝄢</span>) EXACT VECTOR DRAWING BASED ON F3 (4th Line, Y=104)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 1. Big Head Circle starting exactly on 4th Line (X=40, Y=104)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const head = document.createElementNS("http://www.w3.org/2000/svg", "circle");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>head.setAttribute("cx", "42");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>head.setAttribute("cy", "104"); // 4th line</p>
+<p class="p1"><span class="Apple-converted-space">                </span>head.setAttribute("r", "7.5");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>head.setAttribute("fill", "#1e293b");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>clefGroup.appendChild(head);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 2. Thick Curved Hook sweeping up to line 5 (Y=88) and fading down to space 1 (Y=144)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const hook = document.createElementNS("http://www.w3.org/2000/svg", "path");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Path designed to wrap around 4th line</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const d = "M 42 104 C 42 84, 76 80, 76 106 C 76 128, 56 156, 42 166 C 40.5 167, 39 165, 40.5 163.5 C 54 153, 70 128, 70 106 C 70 88, 48 88, 42 101 Z";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>hook.setAttribute("d", d);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>hook.setAttribute("fill", "#1e293b");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>clefGroup.appendChild(hook);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 3. Dot 1: In Space 4 (between Line 4 [Y=104] &amp; Line 5 [Y=88]) -&gt; Y = 96</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dotTop = document.createElementNS("http://www.w3.org/2000/svg", "circle");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotTop.setAttribute("cx", "85");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotTop.setAttribute("cy", "96"); // Space 4 (Upper dot)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotTop.setAttribute("r", "4.5");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotTop.setAttribute("fill", "#1e293b");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>clefGroup.appendChild(dotTop);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 4. Dot 2: In Space 3 (between Line 3 [Y=120] &amp; Line 4 [Y=104]) -&gt; Y = 112</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const dotBottom = document.createElementNS("http://www.w3.org/2000/svg", "circle");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotBottom.setAttribute("cx", "85");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotBottom.setAttribute("cy", "112"); // Space 3 (Lower dot)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotBottom.setAttribute("r", "4.5");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dotBottom.setAttribute("fill", "#1e293b");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>clefGroup.appendChild(dotBottom);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function loadNextNote() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (currentQuestion &gt;= MAX_QUESTIONS) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>endGame();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentQuestion++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('questionCount').innerText = `${currentQuestion} / ${MAX_QUESTIONS}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sourceArray = currentMode === 'treble' ? notesTreble : notesBass;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let nextNote = sourceArray[Math.floor(Math.random() * sourceArray.length)];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Prevent same note twice in a row</p>
+<p class="p1"><span class="Apple-converted-space">            </span>while(currentNote &amp;&amp; nextNote.pitch === currentNote.pitch) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>nextNote = sourceArray[Math.floor(Math.random() * sourceArray.length)];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentNote = nextNote;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>drawNote(currentNote);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>startTimer();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function drawNote(note) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const noteGroup = document.getElementById('noteGroup');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>noteGroup.innerHTML = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const cy = SVG_Y_CENTER - (note.step * STEP_SIZE);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const cx = 175;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Draw Ledger Lines (덧줄)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let y = 72; y &gt;= cy; y -= LINE_SPACING) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>drawLedgerLine(noteGroup, cx, y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let y = 168; y &lt;= cy; y += LINE_SPACING) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>drawLedgerLine(noteGroup, cx, y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 2. Draw Note Head</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const head = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("cx", cx);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("cy", cy);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("rx", "12");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("ry", "9");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("transform", `rotate(-15 ${cx} ${cy})`);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>head.setAttribute("class", "note-head pop-animation");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>noteGroup.appendChild(head);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 3. Draw Stem</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const stem = document.createElementNS("http://www.w3.org/2000/svg", "line");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stem.setAttribute("class", "note-stem pop-animation");</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (cy &gt; SVG_Y_CENTER) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("x1", cx + 10);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("x2", cx + 10);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("y1", cy);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("y2", cy - 40);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("x1", cx - 10);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("x2", cx - 10);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("y1", cy);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stem.setAttribute("y2", cy + 40);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>noteGroup.appendChild(stem);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function drawLedgerLine(parent, cx, y) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const line = document.createElementNS("http://www.w3.org/2000/svg", "line");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line.setAttribute("x1", cx - 22);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line.setAttribute("x2", cx + 22);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line.setAttribute("y1", y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line.setAttribute("y2", y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line.setAttribute("class", "ledger-line");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>parent.appendChild(line);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function startTimer() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stopTimer();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>startTime = Date.now();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>timerInterval = requestAnimationFrame(updateTimer);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateTimer() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const elapsed = Date.now() - startTime;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const remaining = Math.max(0, TIME_LIMIT - elapsed);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const percentage = (remaining / TIME_LIMIT) * 100;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const timerBar = document.getElementById('timerBar');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>timerBar.style.width = percentage + '%';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (percentage &gt; 50) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timerBar.className = "h-full w-full rounded-full bg-gradient-to-r from-indigo-400 to-purple-500 transition-all duration-75";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else if (percentage &gt; 20) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timerBar.className = "h-full w-full rounded-full bg-amber-400 transition-all duration-75";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timerBar.className = "h-full w-full rounded-full bg-rose-500 transition-all duration-75";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (remaining &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timerInterval = requestAnimationFrame(updateTimer);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>handleTimeOut();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function stopTimer() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (timerInterval) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cancelAnimationFrame(timerInterval);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('timerBar').style.width = '0%';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function handleTimeOut() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isProcessing) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isProcessing = true;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>combo = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>playWrongSound();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateScoreUI();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const staffContainer = document.getElementById('staffContainer');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>staffContainer.classList.add('shake-animation');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>staffContainer.classList.remove('shake-animation');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>isProcessing = false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loadNextNote();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 400);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function skipNote() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isProcessing) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>combo = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateScoreUI();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stopTimer();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loadNextNote();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function checkAnswer(answerName) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isProcessing || !currentNote) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isProcessing = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stopTimer();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const isCorrect = answerName === currentNote.name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const staffContainer = document.getElementById('staffContainer');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (isCorrect) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const elapsed = Date.now() - startTime;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const remaining = Math.max(0, TIME_LIMIT - elapsed);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const timeBonus = Math.floor((remaining / TIME_LIMIT) * 10);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>combo++;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const points = 10 + timeBonus + (Math.floor(combo / 2) * 5);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>score += points;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Play Piano Sound of the Correct Note (A4 = 440Hz)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>playPianoCorrectSound(currentNote.pitch, combo);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showScoreFeedback(points);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>spawnFireworks();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updateScoreUI();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>isProcessing = false;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>loadNextNote();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}, 450);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>combo = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>playWrongSound();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updateScoreUI();</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>staffContainer.classList.add('shake-animation');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>staffContainer.classList.remove('shake-animation');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>isProcessing = false;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>loadNextNote();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}, 400);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function endGame() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stopTimer();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('gameScreen').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const gameOverDiv = document.getElementById('gameOverScreen');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameOverDiv.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameOverDiv.classList.add('flex');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('finalNickname').innerText = nickname;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('finalScoreDisplay').innerText = score;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(window.saveScoreToFirebase) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.saveScoreToFirebase(nickname, score);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(window.listenToLeaderboard) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.listenToLeaderboard((ranks) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const listEl = document.getElementById('leaderboardList');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>listEl.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (ranks.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>listEl.innerHTML = '&lt;li class="text-center text-slate-400 text-sm py-4"&gt;아직 기록이 없습니다.&lt;/li&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ranks.forEach((r, idx) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>const isMe = (r.nickname === nickname &amp;&amp; r.score === score);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>const li = document.createElement('li');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>li.className = `flex justify-between items-center p-3.5 rounded-2xl ${isMe ? 'bg-indigo-100/80 border-2 border-indigo-300 font-bold' : 'bg-white border border-slate-100'}`;</p>
+<p class="p2"><span class="Apple-converted-space">                        </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let badge = `&lt;span class="w-6 text-center font-bold text-slate-400 font-jua"&gt;${idx + 1}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if(idx === 0) badge = `&lt;span class="w-6 text-center text-lg"&gt;🥇&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>else if(idx === 1) badge = `&lt;span class="w-6 text-center text-lg"&gt;🥈&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>else if(idx === 2) badge = `&lt;span class="w-6 text-center text-lg"&gt;🥉&lt;/span&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>li.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>${badge}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="ml-2.5 font-bold text-slate-700 font-jua text-base"&gt;${r.nickname}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="font-black text-indigo-600 font-jua text-lg"&gt;${r.score}점&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>listEl.appendChild(li);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Plays Piano Tone for the exact pitch (A4 = 440Hz base)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function playPianoCorrectSound(pitch, currentCombo) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!pianoSynth) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const now = Tone.now();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>pianoSynth.triggerAttackRelease(pitch, "2n", now);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (currentCombo &gt; 0 &amp;&amp; currentCombo % 3 === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cheerFilter.frequency.value = 300;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cheerNoise.triggerAttackRelease("1n", now + 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cheerFilter.frequency.rampTo(2500, 0.4, now + 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function playWrongSound() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if(!wrongSynth) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>wrongSynth.triggerAttackRelease("Bb2", "8n");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateScoreUI() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('scoreDisplay').innerText = score;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const comboEl = document.getElementById('comboDisplay');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>comboEl.innerText = combo;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (combo &gt;= 3) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>comboEl.classList.add('combo-fire');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>comboEl.classList.remove('text-amber-400');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>comboEl.classList.remove('combo-fire');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>comboEl.classList.add('text-amber-400');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showScoreFeedback(points) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const fb = document.getElementById('feedbackText');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>fb.innerText = `+${points}`;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>fb.classList.remove('opacity-0', 'scale-50', '-translate-y-10');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>fb.classList.add('opacity-100', 'scale-100');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>void fb.offsetWidth;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>fb.classList.add('opacity-0', 'scale-125', '-translate-y-10');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const canvas = document.getElementById('fireworksCanvas');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ctx = canvas.getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let particles = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let canvasWidth, canvasHeight;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function resizeCanvas() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvasWidth = canvas.parentElement.clientWidth;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvasHeight = canvas.parentElement.clientHeight;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvas.width = canvasWidth;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>canvas.height = canvasHeight;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.addEventListener('resize', resizeCanvas);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(resizeCanvas, 100);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>class Particle {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>constructor(x, y, color) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.x = x;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.y = y;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.color = color;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const angle = Math.random() * Math.PI * 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const speed = Math.random() * 5 + 2;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.vx = Math.cos(angle) * speed;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.vy = Math.sin(angle) * speed;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.alpha = 1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.decay = Math.random() * 0.02 + 0.015;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.size = Math.random() * 4 + 2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>update() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.x += this.vx;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.y += this.vy;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.vy += 0.1;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.alpha -= this.decay;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>draw(ctx) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.save();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.globalAlpha = this.alpha;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillStyle = this.color;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.restore();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function spawnFireworks() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const colors = ['#f43f5e', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa', '#f472b6'];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const staffRect = document.getElementById('staffContainer').getBoundingClientRect();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const appRect = document.querySelector('.app-container').getBoundingClientRect();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const x = (staffRect.left - appRect.left) + staffRect.width / 2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const y = (staffRect.top - appRect.top) + staffRect.height / 2;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i=0; i&lt;30; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const color = colors[Math.floor(Math.random() * colors.length)];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>particles.push(new Particle(x, y, color));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function animateFireworks() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.clearRect(0, 0, canvasWidth, canvasHeight);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i = particles.length - 1; i &gt;= 0; i--) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const p = particles[i];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.update();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>p.draw(ctx);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(p.alpha &lt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>particles.splice(i, 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>requestAnimationFrame(animateFireworks);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = function() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>resizeCanvas();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animateFireworks();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
